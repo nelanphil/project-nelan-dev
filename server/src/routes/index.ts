@@ -1,9 +1,9 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 
 export const router = Router();
 
 // Health check route
-router.get('/health', (req, res) => {
+router.get('/health', (req: Request, res: Response) => {
   res.json({ 
     status: 'ok', 
     message: 'API is running',
@@ -12,7 +12,7 @@ router.get('/health', (req, res) => {
 });
 
 // Example route - replace with your actual routes
-router.get('/example', (req, res) => {
+router.get('/example', (req: Request, res: Response) => {
   res.json({ message: 'This is an example route' });
 });
 
