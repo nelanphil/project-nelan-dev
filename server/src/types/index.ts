@@ -1,4 +1,4 @@
-import { User } from '@jsr/supabase__supabase-js';
+import { User } from '@supabase/supabase-js';
 
 // Extend Express Request to include user
 declare global {

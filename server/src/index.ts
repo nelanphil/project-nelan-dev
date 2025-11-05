@@ -8,11 +8,22 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const CORS_ORIGIN = process.env.CORS_ORIGIN || (NODE_ENV === 'production' ? '' : 'http://localhost:3000');
+
+// Validate CORS_ORIGIN in production
+if (NODE_ENV === 'production' && !process.env.CORS_ORIGIN) {
+  console.warn('⚠️  WARNING: CORS_ORIGIN environment variable is not set in production. This may cause CORS errors.');
+}
+
+// Parse allowed origins (support comma-separated list)
+const allowedOrigins = CORS_ORIGIN 
+  ? CORS_ORIGIN.split(',').map(origin => origin.trim()).filter(Boolean)
+  : [];
 
 // Middleware
 app.use(cors({
-  origin: CORS_ORIGIN.split(',').map(origin => origin.trim()),
+  origin: allowedOrigins.length > 0 ? allowedOrigins : undefined,
   credentials: true,
 }));
 app.use(express.json());
@@ -52,8 +63,12 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`CORS enabled for: ${CORS_ORIGIN}`);
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`📦 Environment: ${NODE_ENV}`);
+  if (allowedOrigins.length > 0) {
+    console.log(`🌐 CORS enabled for: ${allowedOrigins.join(', ')}`);
+  } else {
+    console.log(`⚠️  CORS: No allowed origins configured`);
+  }
 });
 
