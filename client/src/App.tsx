@@ -31,7 +31,7 @@ export default function App() {
         <ScrollToTopOnRouteChange />
         <div className="bg-background text-foreground relative min-h-screen">
           <Navbar />
-          
+
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -48,7 +48,7 @@ export default function App() {
               }
             />
           </Routes>
-          
+
           <ScrollToTop />
           <Toaster />
         </div>

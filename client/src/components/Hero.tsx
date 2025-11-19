@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { TwitterPost } from "./TwitterPost";
+import { XPost } from "./XPost";
 
 export function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -9,21 +9,9 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const y = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0%", "50%"],
-  );
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.5],
-    [1, 0],
-  );
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.5],
-    [1, 0.9],
-  );
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
 
   return (
     <div
@@ -38,11 +26,11 @@ export function Hero() {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <div className="flex flex-col items-center">
-          <TwitterPost
+          <XPost
             profileImage="https://res.cloudinary.com/dtxc1dbfx/image/upload/v1761998684/IMG_2531_kgafj6.jpg"
             name="Phillip Nelan"
             handle="phillipnelan"
-            content={`Hi, I'm Phillip Nelan 👋\n\nFull-Stack Developer crafting seamless, performant web experiences. My passion is building products that make a difference.\n\n🔗 github.com/phillipnelan\n💼 linkedin.com/in/phillipnelan\n📧 p@nelan.dev`}
+            content={`Hi, I'm Phillip Nelan 👋\n\nFull-Stack Developer crafting seamless, performant web experiences. My passion is building products that make a difference.\n\n🔗 github.com/nelanphil\n💼 linkedin.com/in/phillipnelan\n📧 p@nelan.dev`}
             timestamp="2h"
           />
 

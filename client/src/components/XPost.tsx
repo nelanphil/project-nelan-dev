@@ -8,7 +8,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 
-interface TwitterPostProps {
+interface XPostProps {
   profileImage: string;
   name: string;
   handle: string;
@@ -16,13 +16,13 @@ interface TwitterPostProps {
   timestamp?: string;
 }
 
-export function TwitterPost({
+export function XPost({
   profileImage,
   name,
   handle,
   content,
   timestamp = "2h",
-}: TwitterPostProps) {
+}: XPostProps) {
   return (
     <Card className="max-w-[700px] w-full mx-auto bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl overflow-hidden">
       {/* Header */}
@@ -103,3 +103,4 @@ export function TwitterPost({
     </Card>
   );
 }
+

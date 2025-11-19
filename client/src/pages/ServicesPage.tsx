@@ -8,7 +8,7 @@ export function ServicesPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen pt-16"
+      className="min-h-screen"
     >
       <ServicesSection />
     </motion.div>

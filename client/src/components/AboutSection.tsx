@@ -186,7 +186,7 @@ export function AboutSection() {
             </div>
             <h3 className="mb-6">My Mission Today</h3>
             <p className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
-              I'm dedicated to bringing enterprise-level
+              I&apos;m dedicated to bringing enterprise-level
               features and robust solutions to individual
               entrepreneurs, small businesses, and medium-sized
               companies—without the enterprise premium or

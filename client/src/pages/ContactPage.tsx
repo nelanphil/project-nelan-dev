@@ -69,7 +69,7 @@ export function ContactPage() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3 }}
-      className="min-h-screen pt-16"
+      className="min-h-screen"
     >
       <section className="relative py-12 md:py-24 px-6">
         <div className="max-w-4xl mx-auto">
@@ -84,8 +84,9 @@ export function ContactPage() {
             </div>
             <h1 className="mb-4">Get In Touch</h1>
             <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
-              Have a project in mind or want to collaborate? I'd love to hear from you.
-              Send me a message and I'll get back to you as soon as possible.
+              Have a project in mind or want to collaborate? I&apos;d love to hear
+              from you. Send me a message and I&apos;ll get back to you as soon as
+              possible.
             </p>
           </motion.div>
 
@@ -104,7 +105,7 @@ export function ContactPage() {
                   <CheckCircle2 className="w-16 h-16 text-green-500 dark:text-green-400 mx-auto mb-4" />
                   <h3 className="mb-2">Message Sent!</h3>
                   <p className="text-gray-600 dark:text-gray-300">
-                    Thank you for reaching out. I'll get back to you soon.
+                    Thank you for reaching out. I&apos;ll get back to you soon.
                   </p>
                 </motion.div>
               ) : (

@@ -20,9 +20,9 @@ export function Footer() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h3 className="mb-4">Let's work together</h3>
+          <h3 className="mb-4">Let&apos;s work together</h3>
           <p className="text-gray-600 dark:text-gray-300 mb-8">
-            I'm always open to discussing new projects and creative ideas.
+            I&apos;m always open to discussing new projects and creative ideas.
           </p>
           <button
             onClick={handleGetInTouch}
@@ -51,12 +51,12 @@ export function Footer() {
               LinkedIn
             </a>
             <a
-              href="https://twitter.com"
+              href="https://x.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
-              Twitter
+              X
             </a>
           </div>
           <p className="text-gray-500 dark:text-gray-400 text-sm">

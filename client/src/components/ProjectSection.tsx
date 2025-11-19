@@ -99,6 +99,11 @@ export function ProjectSection({ project, index }: ProjectSectionProps) {
                   Beta
                 </Badge>
               )}
+              {project.status === "in development" && (
+                <Badge className="bg-yellow-500 hover:bg-yellow-600 text-white">
+                  In Development
+                </Badge>
+              )}
             </div>
             <p className="text-gray-600 dark:text-gray-300 mb-4">{project.role}</p>
             <p className="text-gray-700 dark:text-gray-300 mb-6 text-lg leading-relaxed">
