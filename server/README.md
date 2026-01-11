@@ -1,6 +1,6 @@
 # Nelan Dev Server
 
-Backend API server for nelan.dev web application.
+Backend API server for nelan.dev web application (Express + MongoDB + JWT).
 
 ## Local Development
 
@@ -18,9 +18,12 @@ Backend API server for nelan.dev web application.
    PORT=5000
    NODE_ENV=development
    CORS_ORIGIN=http://localhost:3000
-   SUPABASE_URL=your_supabase_project_url
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+   MONGO_URI_DEVELOPMENT=mongodb+srv://<dev-connection-string>
+   MONGO_URI_PRODUCTION=mongodb+srv://<prod-connection-string>
+   JWT_SECRET=super-secret-value
    ```
+
+   > Even in development the code expects both `MONGO_URI_DEVELOPMENT` and `MONGO_URI_PRODUCTION`, so keep placeholders for the value you’re not using yet.
 
 3. Run the development server:
 
@@ -49,13 +52,14 @@ Backend API server for nelan.dev web application.
 
 ### Required for Production (Render)
 
-| Variable                    | Description                                                             | Example                                                                                |
-| --------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `PORT`                      | Server port (automatically set by Render)                               | `10000`                                                                                |
-| `NODE_ENV`                  | Environment mode                                                        | `production`                                                                           |
-| `CORS_ORIGIN`               | Allowed frontend origin(s). Can be comma-separated for multiple origins | `https://nelan-dev.onrender.com` or `https://nelan-dev.onrender.com,https://nelan.dev` |
-| `SUPABASE_URL`              | Your Supabase project URL                                               | `https://xxxxx.supabase.co`                                                            |
-| `SUPABASE_SERVICE_ROLE_KEY` | Your Supabase service role key (server-side only)                       | `eyJhbGc...`                                                                           |
+| Variable                | Description                                                             | Example                                                                                |
+| ----------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `PORT`                  | Server port (automatically set by Render)                               | `10000`                                                                                |
+| `NODE_ENV`              | Environment mode                                                        | `production`                                                                           |
+| `CORS_ORIGIN`           | Allowed frontend origin(s). Comma-separated supported                   | `https://nelan-dev.onrender.com,https://nelan.dev`                                     |
+| `MONGO_URI_DEVELOPMENT` | MongoDB connection string for dev (used during build hooks/tests)       | `mongodb+srv://username:password@cluster0.mongodb.net/dev?retryWrites=true&w=majority` |
+| `MONGO_URI_PRODUCTION`  | MongoDB connection string for prod                                      | `mongodb+srv://username:password@cluster0.mongodb.net/prod?retryWrites=true&w=majority`|
+| `JWT_SECRET`            | Secret used to sign/verify JWTs                                         | `change-me-please`                                                                     |
 
 ### Setting Environment Variables in Render
 
@@ -63,17 +67,22 @@ Backend API server for nelan.dev web application.
 2. Navigate to **Environment** tab
 3. Add the following environment variables:
    - `NODE_ENV`: `production`
-   - `CORS_ORIGIN`: Your frontend static site URL (e.g., `https://your-frontend.onrender.com`)
-   - `SUPABASE_URL`: Your Supabase project URL
-   - `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key
+   - `CORS_ORIGIN`: Your frontend URL(s)
+   - `MONGO_URI_DEVELOPMENT`: Optional but recommended so preview builds still connect
+   - `MONGO_URI_PRODUCTION`: Production MongoDB connection string
+   - `JWT_SECRET`: Strong, unpredictable string (rotate periodically)
 
 **Note:** `PORT` is automatically provided by Render - you don't need to set it manually.
 
 ## API Endpoints
 
-- `GET /health` - Health check endpoint
-- `GET /api/health` - API health check
-- `GET /api/example` - Example route
+- `GET /health` – root health check
+- `GET /api/health` – API health check
+- `POST /api/auth/register` – create a new user (email + password)
+- `POST /api/auth/login` – login and receive a JWT
+- `GET /api/auth/me` – return the authenticated user (requires `Authorization: Bearer <token>`)
+- `POST /api/contact` – submit contact form payload
+- `GET /api/dashboard` – sample protected endpoint
 
 ## Deployment on Render
 

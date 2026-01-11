@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { supabase } from "../lib/supabase";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { toast } from "sonner";
+import { login } from "../lib/api";
 
 interface SignInFormData {
   email: string;
@@ -31,23 +31,12 @@ export function ClientPortalPage() {
   const onSubmit = async (data: SignInFormData) => {
     setIsLoading(true);
     try {
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
-        email: data.email,
-        password: data.password,
-      });
-
-      if (error) {
-        toast.error(error.message || "Failed to sign in");
-        return;
-      }
-
-      if (authData.session) {
-        toast.success("Signed in successfully");
-        navigate("/dashboard");
-      }
+      await login(data.email, data.password);
+      toast.success("Signed in successfully");
+      navigate("/dashboard");
     } catch (error) {
       console.error("Sign in error:", error);
-      toast.error("An unexpected error occurred");
+      toast.error(error instanceof Error ? error.message : "An unexpected error occurred");
     } finally {
       setIsLoading(false);
     }

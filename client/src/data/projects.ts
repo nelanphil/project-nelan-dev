@@ -3,20 +3,20 @@ import type { Project } from "../types/project";
 export const projects: Project[] = [
   {
     id: "1",
-    title: "Vioma Market",
+    title: "BRUU",
     description:
-      "A custom-built frontend and backend eCommerce store for a brand that sells freshly baked healthy options directly from the kitchen to consumers. Features include product catalog management, secure payment processing, order tracking, inventory management, and a seamless shopping experience designed to showcase the artisanal quality of freshly baked goods.",
+      "A full-stack MERN eCommerce platform for a brand selling quality functional mushroom tea powder blends. Features a comprehensive admin dashboard for inventory management, product CRUD with built-in SEO optimization, customizable customer rewards point system, product analytics, storefront management, and an integrated lead generation system—all designed to drive growth and streamline operations.",
     role: "Full-Stack Developer & SEO Specialist",
     technologies: [
-      "React",
+      "MongoDB",
       "Express",
+      "React",
       "Node.js",
-      "Supabase (Postgres)",
       "Stripe",
     ],
-    imageUrl:
-      "https://images.unsplash.com/photo-1555507036-ab1f4038808a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    imageUrl: "/images/bruu-preview.jpg",
     year: "2025",
+    link: "https://bruu-it.com",
     status: "in development",
     highlighted: true,
   },

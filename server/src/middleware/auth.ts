@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { supabase } from '../config/supabase';
+import { verifyToken } from '../utils/auth';
+import { UserModel } from '../models/User';
 
 /**
- * Middleware to authenticate requests using Supabase JWT
+ * Middleware to authenticate requests using JWT stored in the Authorization header.
  * Expects Authorization header: Bearer <token>
  */
 export async function authenticateRequest(
@@ -12,27 +13,30 @@ export async function authenticateRequest(
 ) {
   try {
     const authHeader = req.headers.authorization;
-    
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ error: 'Missing or invalid authorization header' });
     }
 
-    const token = authHeader.substring(7); // Remove 'Bearer ' prefix
-    
-    // Verify the token with Supabase
-    const { data: { user }, error } = await supabase.auth.getUser(token);
+    const token = authHeader.substring(7);
+    const payload = verifyToken(token);
 
-    if (error || !user) {
-      return res.status(401).json({ error: 'Invalid or expired token' });
+    const user = await UserModel.findById(payload.userId).select('_id email role');
+
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
     }
 
-    // Attach user to request object for use in route handlers
-    (req as any).user = user;
-    
+    req.user = {
+      id: user._id.toString(),
+      email: user.email,
+      role: user.role,
+    };
+
     next();
   } catch (error) {
     console.error('Authentication error:', error);
-    res.status(500).json({ error: 'Authentication failed' });
+    res.status(401).json({ error: 'Invalid or expired token' });
   }
 }
 

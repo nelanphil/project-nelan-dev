@@ -1,10 +1,16 @@
-import { User } from '@supabase/supabase-js';
+import { UserRole } from '../models/User';
+
+export interface AuthenticatedUser {
+  id: string;
+  email: string;
+  role: UserRole;
+}
 
 // Extend Express Request to include user
 declare global {
   namespace Express {
     interface Request {
-      user?: User;
+      user?: AuthenticatedUser;
     }
   }
 }

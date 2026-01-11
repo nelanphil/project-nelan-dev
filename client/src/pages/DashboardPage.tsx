@@ -1,27 +1,33 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signOut, getUser } from "../lib/supabase";
 import { Button } from "../components/ui/button";
-import type { User } from "@jsr/supabase__supabase-js";
+import type { AuthUser } from "../types/auth";
+import { fetchCurrentUser, logout } from "../lib/api";
 
 export function DashboardPage() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const userData = await getUser();
-      setUser(userData);
-      setIsLoading(false);
+    const loadUser = async () => {
+      try {
+        const userData = await fetchCurrentUser();
+        setUser(userData);
+      } catch (error) {
+        console.error("Failed to load user:", error);
+        navigate("/client-portal", { replace: true });
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    fetchUser();
-  }, []);
+    loadUser();
+  }, [navigate]);
 
   const handleSignOut = async () => {
     try {
-      await signOut();
+      await logout();
       navigate("/client-portal");
     } catch (error) {
       console.error("Sign out error:", error);
@@ -46,7 +52,7 @@ export function DashboardPage() {
             </h1>
             <p className="text-gray-600 dark:text-gray-400">
               Welcome{user?.email ? `, ${user.email}` : ""}
-              {user?.user_metadata?.role === "admin" && (
+              {user?.role === "admin" && (
                 <span className="ml-2 px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded">
                   Admin
                 </span>

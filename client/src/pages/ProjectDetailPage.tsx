@@ -229,32 +229,31 @@ export function ProjectDetailPage() {
                     {project.id === "1" && (
                       <>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Custom-built frontend with React for seamless user
-                          experience
+                          Full MERN stack architecture (MongoDB, Express, React, Node.js)
                         </li>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Robust backend API with Express and Node.js for order
-                          processing
+                          Comprehensive admin dashboard for complete store management
                         </li>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Product catalog showcasing freshly baked healthy
-                          options
+                          Product CRUD with built-in SEO optimization for each product
+                        </li>
+                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                          Real-time inventory management and tracking system
+                        </li>
+                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                          Customizable customer rewards point system for loyalty
+                        </li>
+                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                          Product analytics dashboard with sales insights
+                        </li>
+                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                          Storefront fully managed through admin dashboard
+                        </li>
+                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                          Integrated lead generation system for customer acquisition
                         </li>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                           Secure payment processing with Stripe integration
-                        </li>
-                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Real-time inventory management system
-                        </li>
-                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Order tracking and customer notification system
-                        </li>
-                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Direct-to-consumer (D2C) sales platform from kitchen
-                          to customer
-                        </li>
-                        <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Mobile-responsive design for on-the-go ordering
                         </li>
                       </>
                     )}
@@ -318,7 +317,7 @@ export function ProjectDetailPage() {
                   </h2>
                   <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
                     {project.id === "1" &&
-                      "Built with React for the frontend and Express/Node.js for the backend, Vioma Market leverages modern web technologies to deliver a seamless eCommerce experience. The backend utilizes Supabase (PostgreSQL) for reliable data persistence, handling product inventory, customer orders, and user accounts. Stripe integration provides secure payment processing, ensuring safe transactions for direct-to-consumer sales. The architecture is designed to scale with the growing business, supporting real-time inventory updates and order management from the kitchen to the customer."}
+                      "Built on the MERN stack (MongoDB, Express, React, Node.js), BRUU delivers a complete eCommerce solution with a powerful admin dashboard. MongoDB provides flexible document storage for products, orders, customer data, and rewards tracking. The admin dashboard enables full product CRUD operations with SEO fields for meta titles, descriptions, and keywords built into each product entry. The customizable rewards system allows business owners to configure point values and redemption rules, while the analytics module tracks product performance and sales trends. The storefront is fully manageable from the admin panel, and the lead generation system captures potential customers through strategic touchpoints throughout the shopping experience."}
                     {project.id === "2" &&
                       "Developed with React and Tailwind CSS, integrated with Shopify's robust eCommerce platform. The implementation focuses on performance optimization, accessibility, and SEO best practices. Custom Shopify Liquid templates were created to provide unique product displays while maintaining easy content management for the business owner."}
                     {project.id === "3" &&
@@ -330,7 +329,7 @@ export function ProjectDetailPage() {
                   </h2>
                   <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
                     {project.id === "1" &&
-                      "One of the main challenges was creating an eCommerce platform that accurately reflects the freshness and artisanal quality of baked goods while providing a smooth ordering experience. We implemented real-time inventory management to prevent overselling of freshly baked items, ensuring customers only see available products. Another challenge was designing a system that supports the direct-to-consumer model, allowing the kitchen to manage orders efficiently while customers can track their orders from preparation to delivery. We solved this by building a custom admin dashboard integrated with the backend, enabling real-time order updates and inventory synchronization."}
+                      "A key challenge was building a unified admin dashboard that seamlessly integrates inventory management, SEO optimization, rewards configuration, and analytics without overwhelming the user. We solved this with a modular dashboard design that organizes features into intuitive sections while maintaining a cohesive experience. Another challenge was implementing the customizable rewards system—we built a flexible points engine that allows the business owner to define earning rules, point values, and redemption thresholds. For SEO, we integrated optimization fields directly into the product creation workflow, making it easy to manage meta tags and search visibility alongside product details. The lead generation system required careful UX consideration to capture leads without disrupting the shopping experience."}
                     {project.id === "2" &&
                       "The primary challenge was optimizing product imagery and load times for a media-heavy coral eCommerce site. We implemented progressive image loading, optimized asset delivery through CDN, and utilized modern image formats (WebP) with fallbacks to ensure fast performance across all devices and connection speeds."}
                     {project.id === "3" &&

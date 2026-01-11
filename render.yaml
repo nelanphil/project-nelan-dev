@@ -9,8 +9,12 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      - key: CORS_ORIGIN
+        value: https://nelan-dev.onrender.com
+      - key: MONGO_URI_DEVELOPMENT
+        sync: false # set via dashboard
+      - key: MONGO_URI_PRODUCTION
+        sync: false # set via dashboard
+      - key: JWT_SECRET
+        sync: false # set via dashboard
       # PORT is automatically provided by Render
-      # CORS_ORIGIN should be set to your frontend static site URL
-      # Example: https://nelan-dev.onrender.com
-      # SUPABASE_URL should be set to your Supabase project URL
-      # SUPABASE_SERVICE_ROLE_KEY should be set to your Supabase service role key

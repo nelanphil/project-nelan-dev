@@ -1,23 +1,28 @@
 import { Router, Request, Response } from 'express';
+import { authRoutes } from './auth';
+import { contactRoutes } from './contact';
+import { authenticateRequest } from '../middleware/auth';
 
 export const router = Router();
 
-// Health check route
 router.get('/health', (req: Request, res: Response) => {
-  res.json({ 
-    status: 'ok', 
+  res.json({
+    status: 'ok',
     message: 'API is running',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
-// Example route - replace with your actual routes
-router.get('/example', (req: Request, res: Response) => {
-  res.json({ message: 'This is an example route' });
-});
+router.use('/auth', authRoutes);
+router.use('/contact', contactRoutes);
 
-// TODO: Add your routes here
-// Example:
-// router.use('/users', userRoutes);
-// router.use('/services', serviceRoutes);
+router.get('/dashboard', authenticateRequest, (req: Request, res: Response) => {
+  res.json({
+    success: true,
+    data: {
+      message: 'Protected dashboard data',
+      user: req.user,
+    },
+  });
+});
 
