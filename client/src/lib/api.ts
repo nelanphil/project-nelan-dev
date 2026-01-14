@@ -52,7 +52,7 @@ export async function apiRequest<T>(
     headers,
   });
 
-  let payload: any = null;
+  let payload: unknown = null;
   const text = await response.text();
   if (text) {
     try {

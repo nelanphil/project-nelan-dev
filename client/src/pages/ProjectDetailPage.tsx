@@ -229,13 +229,16 @@ export function ProjectDetailPage() {
                     {project.id === "1" && (
                       <>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Full MERN stack architecture (MongoDB, Express, React, Node.js)
+                          Full MERN stack architecture (MongoDB, Express, React,
+                          Node.js)
                         </li>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Comprehensive admin dashboard for complete store management
+                          Comprehensive admin dashboard for complete store
+                          management
                         </li>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Product CRUD with built-in SEO optimization for each product
+                          Product CRUD with built-in SEO optimization for each
+                          product
                         </li>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                           Real-time inventory management and tracking system
@@ -250,7 +253,8 @@ export function ProjectDetailPage() {
                           Storefront fully managed through admin dashboard
                         </li>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                          Integrated lead generation system for customer acquisition
+                          Integrated lead generation system for customer
+                          acquisition
                         </li>
                         <li className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                           Secure payment processing with Stripe integration
