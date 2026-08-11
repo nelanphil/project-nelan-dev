@@ -7,7 +7,9 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
 # Local (gitignored) env files for development. Only created if missing so
-# developer overrides are preserved across reruns.
+# developer overrides are preserved across reruns. These hold fallback values
+# only: Cloud Agent secrets / real environment variables take precedence at
+# runtime because the server's dotenv load does not override existing env vars.
 if [ ! -f server/.env ]; then
   cp .cursor/server.env.example server/.env
   echo "Created server/.env from template"
