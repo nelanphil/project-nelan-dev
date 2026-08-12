@@ -7,6 +7,6 @@ export interface Project {
   imageUrl: string;
   year: string;
   link?: string;
-  status?: "beta" | "active" | "archived" | "in development";
+  status?: "beta" | "active" | "archived";
   highlighted?: boolean;
 }

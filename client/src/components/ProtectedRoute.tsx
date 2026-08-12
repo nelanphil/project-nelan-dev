@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { fetchCurrentUser, clearAuthToken, getAuthToken } from "../lib/api";
-import type { AuthUser } from "../types/auth";
+import { supabase } from "../lib/supabase";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,23 +9,20 @@ interface ProtectedRouteProps {
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [_user, setUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = getAuthToken();
-        if (!token) {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) {
+          console.error("Error checking session:", error);
           setIsAuthenticated(false);
-          return;
+        } else {
+          setIsAuthenticated(!!session);
         }
-
-        const currentUser = await fetchCurrentUser();
-        setUser(currentUser);
-        setIsAuthenticated(true);
       } catch (error) {
         console.error("Auth check error:", error);
-        clearAuthToken();
         setIsAuthenticated(false);
       } finally {
         setIsLoading(false);
@@ -34,6 +30,17 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
     };
 
     checkAuth();
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
   if (isLoading) {
