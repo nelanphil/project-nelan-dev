@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
-import { UserModel } from '../models/User';
-import { RoleModel } from '../models/Role';
-import { verifyToken } from '../utils/auth';
-import { AuthenticatedUser } from '../types';
+import { Request, Response, NextFunction } from "express";
+import { UserModel } from "../models/User";
+import { RoleModel } from "../models/Role";
+import { verifyToken } from "../utils/auth";
+import { AuthenticatedUser } from "../types";
 
 /**
  * Middleware to authenticate requests using our own JWT.
@@ -14,13 +14,15 @@ import { AuthenticatedUser } from '../types';
 export async function authenticateRequest(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   try {
     const authHeader = req.headers.authorization;
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({ error: 'Missing or invalid authorization header' });
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res
+        .status(401)
+        .json({ error: "Missing or invalid authorization header" });
     }
 
     const token = authHeader.substring(7); // Remove 'Bearer ' prefix
@@ -29,13 +31,13 @@ export async function authenticateRequest(
     const user = await UserModel.findById(payload.userId);
 
     if (!user || !user.isActive) {
-      return res.status(401).json({ error: 'Invalid or expired token' });
+      return res.status(401).json({ error: "Invalid or expired token" });
     }
 
     const role = await RoleModel.findById(user.roleId);
 
     if (!role) {
-      return res.status(401).json({ error: 'Invalid or expired token' });
+      return res.status(401).json({ error: "Invalid or expired token" });
     }
 
     const authenticatedUser: AuthenticatedUser = {
@@ -50,8 +52,8 @@ export async function authenticateRequest(
 
     next();
   } catch (error) {
-    console.error('Authentication error:', error);
-    res.status(401).json({ error: 'Invalid or expired token' });
+    console.error("Authentication error:", error);
+    res.status(401).json({ error: "Invalid or expired token" });
   }
 }
 
@@ -62,11 +64,11 @@ export async function authenticateRequest(
 export function requirePermission(permission: string) {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
-      return res.status(401).json({ error: 'Not authenticated' });
+      return res.status(401).json({ error: "Not authenticated" });
     }
 
     if (!req.user.permissions.includes(permission)) {
-      return res.status(403).json({ error: 'Insufficient permissions' });
+      return res.status(403).json({ error: "Insufficient permissions" });
     }
 
     next();
@@ -80,14 +82,17 @@ export function requirePermission(permission: string) {
 export function requireAnyPermission(permissions: string[]) {
   return (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
-      return res.status(401).json({ error: 'Not authenticated' });
+      return res.status(401).json({ error: "Not authenticated" });
     }
 
-    if (!permissions.some((permission) => req.user!.permissions.includes(permission))) {
-      return res.status(403).json({ error: 'Insufficient permissions' });
+    if (
+      !permissions.some((permission) =>
+        req.user!.permissions.includes(permission),
+      )
+    ) {
+      return res.status(403).json({ error: "Insufficient permissions" });
     }
 
     next();
   };
 }
-
