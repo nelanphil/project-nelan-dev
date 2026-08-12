@@ -4,8 +4,8 @@ services:
     name: nelan-dev-backend
     rootDir: server
     env: node
-    buildCommand: NODE_ENV=development yarn install && yarn build
-    startCommand: yarn start
+    buildCommand: NODE_ENV=development npm ci && npm run build
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
