@@ -3199,3 +3199,223 @@ html {
     opacity: .5;
   }
 }
+
+/* ——— Client Portal (Stripe-style auth) ——— */
+.portal-auth {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #f6f9fc;
+  color: #30313d;
+}
+
+.portal-auth-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem 3.5rem;
+}
+
+.portal-brand {
+  margin-bottom: 2.5rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #0a2540;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.portal-brand:hover {
+  opacity: 0.8;
+}
+
+.portal-card {
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid #e3e8ee;
+  border-radius: 8px;
+  background: #fff;
+  padding: 2rem 1.75rem;
+  box-shadow:
+    0 2px 5px rgba(60, 66, 87, 0.08),
+    0 1px 1px rgba(0, 0, 0, 0.06);
+}
+
+.portal-card-title {
+  margin: 0 0 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a1f36;
+}
+
+.portal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.portal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.portal-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.portal-label {
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  color: #697386 !important;
+}
+
+.portal-input {
+  height: 2.5rem !important;
+  border-radius: 6px !important;
+  border-color: #e3e8ee !important;
+  background: #fff !important;
+  color: #30313d !important;
+  box-shadow: none !important;
+}
+
+.portal-input:focus-visible {
+  border-color: #635bff !important;
+  background: #f6f5ff !important;
+  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.25) !important;
+}
+
+.portal-input-code {
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.portal-error {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #dc2626;
+}
+
+.portal-help {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #697386;
+  line-height: 1.45;
+}
+
+.portal-help strong {
+  color: #1a1f36;
+  font-weight: 600;
+}
+
+.portal-link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #635bff;
+  cursor: pointer;
+}
+
+.portal-link:hover {
+  color: #0a2540;
+}
+
+.portal-link-center {
+  width: 100%;
+  text-align: center;
+}
+
+.portal-submit {
+  margin-top: 0.25rem;
+  height: 2.5rem !important;
+  width: 100% !important;
+  border-radius: 6px !important;
+  background: #635bff !important;
+  color: #fff !important;
+  font-size: 0.9375rem !important;
+  font-weight: 500 !important;
+}
+
+.portal-submit:hover:not(:disabled) {
+  background: #5851ea !important;
+}
+
+.portal-submit:disabled {
+  opacity: 0.7;
+}
+
+.portal-footer {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #8898aa;
+}
+
+/* Flowing ribbon — centered behind login card */
+.portal-ribbon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(80vw, 620px);
+  transform: translateX(-50%);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.portal-threads {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Each thread's dash pattern travels along its own curve; the shared -360
+   offset is an exact multiple of every dash+gap sum used (18/24/30), so the
+   loop is seamless regardless of a thread's individual pattern or length. */
+.portal-thread {
+  animation: portal-thread-flow linear infinite;
+  will-change: stroke-dashoffset;
+}
+
+@keyframes portal-thread-flow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -360;
+  }
+}
+
+@media (max-width: 767px) {
+  .portal-ribbon {
+    width: min(100vw, 420px);
+    opacity: 0.6;
+  }
+
+  .portal-card {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-thread {
+    animation: none;
+  }
+}

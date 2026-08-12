@@ -7,7 +7,9 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "create-admin": "tsx scripts/create-admin-user.ts",
+    "migrate-roles": "tsx scripts/migrate-roles.ts"
   },
   "keywords": [],
   "author": "",
@@ -23,10 +25,12 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3",
+    "nodemailer": "^9.0.5",
     "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/nodemailer": "^8.0.1",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }

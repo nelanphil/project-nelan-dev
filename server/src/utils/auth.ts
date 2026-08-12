@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs';
 import jwt, { Secret, SignOptions } from 'jsonwebtoken';
-import { UserRole } from '../models/User';
 import { NODE_ENV } from '../config/env';
 
 const jwtSecret = process.env.JWT_SECRET;
@@ -15,10 +14,13 @@ const TOKEN_OPTIONS: SignOptions = {
   expiresIn: JWT_EXPIRES_IN as SignOptions['expiresIn'],
 };
 
+// Kept intentionally minimal — role/permissions are always read fresh from
+// the database on every request (see middleware/auth.ts) so that revoking a
+// permission or reassigning a role takes effect immediately, without
+// requiring the user to log in again.
 export interface JwtPayload {
   userId: string;
   email: string;
-  role: UserRole;
 }
 
 export async function hashPassword(password: string) {
@@ -43,4 +45,3 @@ export function verifyToken(token: string): JwtPayload {
 
   return decoded as JwtPayload;
 }
-

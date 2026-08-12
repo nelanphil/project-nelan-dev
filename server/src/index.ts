@@ -3,6 +3,7 @@ import cors from 'cors';
 import { router } from './routes';
 import { connectToDatabase, disconnectFromDatabase } from './config/mongodb';
 import { NODE_ENV } from './config/env';
+import { seedRbac } from './utils/seedRbac';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -60,6 +61,7 @@ let server: ReturnType<typeof app.listen> | null = null;
 async function startServer() {
   try {
     await connectToDatabase();
+    await seedRbac();
     server = app.listen(PORT, () => {
       console.log(`✅ Server running on port ${PORT}`);
       console.log(`📦 Environment: ${NODE_ENV}`);

@@ -21,9 +21,18 @@ Backend API server for nelan.dev web application (Express + MongoDB + JWT).
    MONGO_URI_DEVELOPMENT=mongodb+srv://<dev-connection-string>
    MONGO_URI_PRODUCTION=mongodb+srv://<prod-connection-string>
    JWT_SECRET=super-secret-value
+   SETTINGS_ENCRYPTION_KEY=another-strong-secret
    ```
 
    > Even in development the code expects both `MONGO_URI_DEVELOPMENT` and `MONGO_URI_PRODUCTION`, so keep placeholders for the value you’re not using yet.
+
+   Bootstrap the first admin (register is admin-only):
+
+   ```bash
+   yarn create-admin
+   # or
+   npm run create-admin
+   ```
 
 3. Run the development server:
 
@@ -60,6 +69,7 @@ Backend API server for nelan.dev web application (Express + MongoDB + JWT).
 | `MONGO_URI_DEVELOPMENT` | MongoDB connection string for dev (used during build hooks/tests)       | `mongodb+srv://username:password@cluster0.mongodb.net/dev?retryWrites=true&w=majority` |
 | `MONGO_URI_PRODUCTION`  | MongoDB connection string for prod                                      | `mongodb+srv://username:password@cluster0.mongodb.net/prod?retryWrites=true&w=majority`|
 | `JWT_SECRET`            | Secret used to sign/verify JWTs                                         | `change-me-please`                                                                     |
+| `SETTINGS_ENCRYPTION_KEY` | Secret used to encrypt SMTP password at rest (falls back to JWT_SECRET) | `change-me-encryption`                                                               |
 
 ### Setting Environment Variables in Render
 
@@ -78,11 +88,34 @@ Backend API server for nelan.dev web application (Express + MongoDB + JWT).
 
 - `GET /health` – root health check
 - `GET /api/health` – API health check
-- `POST /api/auth/register` – create a new user (email + password)
-- `POST /api/auth/login` – login and receive a JWT
-- `GET /api/auth/me` – return the authenticated user (requires `Authorization: Bearer <token>`)
+- `POST /api/auth/register` – create a user (requires `users.manage`; email + password + optional roleId)
+- `POST /api/auth/login` – login and receive a JWT (rejects deactivated accounts)
+- `POST /api/auth/forgot-password` – request a password reset code by email
+- `POST /api/auth/verify-reset-token` – verify a reset code
+- `POST /api/auth/reset-password` – set a new password with a valid reset code
+- `GET /api/auth/me` – return the authenticated user, including role + permissions (requires `Authorization: Bearer <token>`)
+- `GET /api/users` – list users (requires `users.view`)
+- `PATCH /api/users/:id` – update a user's role and/or active status (requires `users.manage`; no self-edit)
+- `GET /api/roles` – list roles (requires `users.manage` or `roles.manage`)
+- `POST /api/roles` – create a role (requires `roles.manage`)
+- `PUT /api/roles/:id` – update a role (requires `roles.manage`; system roles are locked)
+- `DELETE /api/roles/:id` – delete a role (requires `roles.manage`; blocked for system roles or roles in use)
+- `GET /api/permissions` – list the permission catalog (requires `roles.manage`)
+- `GET /api/settings/email` – get SMTP settings (requires `settings.manage`; password never returned)
+- `PUT /api/settings/email` – save SMTP settings (requires `settings.manage`)
+- `POST /api/settings/email/test` – send a test email to the admin (requires `settings.manage`)
 - `POST /api/contact` – submit contact form payload
 - `GET /api/dashboard` – sample protected endpoint
+
+### Roles & Permissions
+
+Permissions (`users.view`, `users.manage`, `roles.manage`, `settings.manage`) are defined in [`src/config/permissions.ts`](src/config/permissions.ts) and synced into the database on every boot. Two system roles are seeded and locked from editing/deletion: `Admin` (all permissions, kept in sync automatically) and `User` (no admin permissions). Additional custom roles can be created from the admin **Roles** page.
+
+If you have existing users from before this system was introduced, run the one-off migration to convert their legacy `role` string into a `roleId` reference:
+
+```bash
+npm run migrate-roles
+```
 
 ## Deployment on Render
 

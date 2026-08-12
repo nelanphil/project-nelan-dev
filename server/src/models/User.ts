@@ -1,11 +1,12 @@
-import { Schema, model, models, Document } from 'mongoose';
-
-export type UserRole = 'admin' | 'user';
+import { Schema, model, models, Document, Types } from 'mongoose';
 
 export interface IUser extends Document {
   email: string;
   passwordHash: string;
-  role: UserRole;
+  roleId: Types.ObjectId;
+  isActive: boolean;
+  passwordResetTokenHash?: string | null;
+  passwordResetExpires?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -23,10 +24,22 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
-    role: {
+    roleId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Role',
+      required: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    passwordResetTokenHash: {
       type: String,
-      enum: ['admin', 'user'],
-      default: 'user',
+      default: null,
+    },
+    passwordResetExpires: {
+      type: Date,
+      default: null,
     },
   },
   {
@@ -34,12 +47,4 @@ const userSchema = new Schema<IUser>(
   }
 );
 
-userSchema.index({ email: 1 }, { unique: true });
-
 export const UserModel = models.User || model<IUser>('User', userSchema);
-
-
-
-
-
-

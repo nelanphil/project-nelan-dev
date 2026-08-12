@@ -1,9 +1,15 @@
-import { UserRole } from '../models/User';
+export interface AuthenticatedRole {
+  id: string;
+  name: string;
+  slug: string;
+}
 
 export interface AuthenticatedUser {
   id: string;
   email: string;
-  role: UserRole;
+  isActive: boolean;
+  role: AuthenticatedRole;
+  permissions: string[];
 }
 
 // Extend Express Request to include user
@@ -32,4 +38,3 @@ export interface Service {
   createdAt: string;
   updatedAt: string;
 }
-
